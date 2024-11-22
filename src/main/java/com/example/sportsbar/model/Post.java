@@ -51,11 +51,9 @@ public class Post {
 //        this.updatedAt = LocalDateTime.now();
 //    }
 
-    // Default constructor
     public Post() {
     }
 
-    // Constructor with fields
     public Post(Integer userId, Integer postId, String content, String sport, String mediaType, String mediaUrl,
                 String timestamp, Integer voiceDuration, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;

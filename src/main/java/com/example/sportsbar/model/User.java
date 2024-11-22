@@ -24,11 +24,9 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    // Default constructor
     public User() {
     }
 
-    // Constructor with fields
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;

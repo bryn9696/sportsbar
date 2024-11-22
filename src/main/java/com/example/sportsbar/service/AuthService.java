@@ -18,7 +18,6 @@ public class AuthService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public boolean authenticateUser(String username, String rawPassword) {
-        // Fetch the user from the database by username
         Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isEmpty()) {
             return false; // User does not exist

@@ -45,7 +45,6 @@ public class UserController {
         }
     }
 
-    // Login user
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         boolean isAuthenticated = authService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
@@ -59,23 +58,21 @@ public class UserController {
         }
     }
 
-    // Example of generating a token (this should be a JWT or session in a real app)
+    // (this should be a JWT or session in a real app)
     private String generateToken(String username) {
         // Replace with actual JWT or secure token logic
         return "dummy-token-for-" + username;
     }
 
-    // Get all posts for the logged-in user
     @GetMapping("/posts")
     public ResponseEntity<?> getPostsForUser(@RequestParam Integer userId) {
         List<Post> posts = postRepository.findByUserId(userId);
         return ResponseEntity.ok(posts);
     }
 
-    // Create a new post for the logged-in user
     @PostMapping("/posts")
     public ResponseEntity<?> createPost(@RequestBody Post post, @RequestParam Integer userId) {
-        post.setUserId(userId);  // Ensure the post belongs to the logged-in user
+        post.setUserId(userId);
         Post savedPost = postRepository.save(post);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPost);
     }

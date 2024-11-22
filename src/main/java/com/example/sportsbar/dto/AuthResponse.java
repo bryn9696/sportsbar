@@ -9,7 +9,6 @@ public class AuthResponse {
         this.token = token;
     }
 
-    // Getters and Setters
     public String getMessage() {
         return message;
     }

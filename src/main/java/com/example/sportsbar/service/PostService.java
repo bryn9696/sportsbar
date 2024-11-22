@@ -31,10 +31,8 @@ public class PostService {
 
     // Method to generate a unique postId
     public Integer generateUniquePostId() {
-        // Logic for generating a unique postId
-        // This could be based on the highest existing postId or another strategy
 
-        Integer highestPostId = postRepository.findMaxPostId();  // Fetch the max postId from the database
-        return highestPostId != null ? highestPostId + 1 : 1;  // Increment by 1 or start from 1
+        Integer highestPostId = postRepository.findMaxPostId();
+        return highestPostId != null ? highestPostId + 1 : 1;
     }
 }

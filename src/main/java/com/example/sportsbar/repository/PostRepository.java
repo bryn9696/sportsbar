@@ -10,9 +10,8 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-    // Get the highest postId
     @Query("SELECT MAX(p.postId) FROM Post p")
-    Integer findMaxPostId();  // Fetch max postId
+    Integer findMaxPostId();
 
     List<Post> findByUserId(Integer userId);
 }

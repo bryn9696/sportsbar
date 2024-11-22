@@ -11,5 +11,4 @@ public class PostConsumer {
         System.out.println("Football post: " + post.getContent());
     }
 
-    // Add listeners for other sports topics as needed
 }

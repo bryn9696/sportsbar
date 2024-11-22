@@ -5,17 +5,14 @@ import com.example.sportsbar.model.Post;
 public class ContentValidator {
     public static void validate(Post post) {
         System.out.println("Validating post: " + post);
-        // Check if content is null or blank
         if (post.getContent() == null || post.getContent().isBlank()) {
             throw new IllegalArgumentException("Content cannot be null or blank");
         }
 
-        // Check if sport is null or blank
         if (post.getSport() == null || post.getSport().isBlank()) {
             throw new IllegalArgumentException("Sport cannot be null or blank");
         }
 
-        // Validate content length based on media type
         switch (post.getMediaType()) {
             case "text":
                 if (post.getContent().length() > 200) {

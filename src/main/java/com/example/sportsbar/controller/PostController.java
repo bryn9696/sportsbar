@@ -49,10 +49,9 @@ public class PostController {
         }
     }
 
-    // Example method to generate a postId
     private Integer generatePostId() {
         // Logic to generate a unique postId
-        return new Random().nextInt(1000);  // Replace with your logic
+        return new Random().nextInt(1000);
     }
 
 
@@ -61,6 +60,6 @@ public class PostController {
     @GetMapping
     public List<Post> getAllPosts() {
 
-        return postRepository.findAll(); // Fetch all posts from the database
+        return postRepository.findAll();
     }
 }
