@@ -1,0 +1,120 @@
+//plugins {
+//	id 'java'
+//	id 'org.springframework.boot' version '3.3.5'
+//	id 'io.spring.dependency-management' version '1.1.6'
+//}
+//
+//group = 'com.example'
+//version = '0.0.1-SNAPSHOT'
+//
+//java {
+//	toolchain {
+//		languageVersion = JavaLanguageVersion.of(17)
+//	}
+//}
+//
+//repositories {
+//	mavenCentral()
+//}
+//
+//System.setProperty("user.dir", "$code")
+//
+//dependencies {
+//	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.kafka:spring-kafka'
+//	implementation 'com.fasterxml.jackson.core:jackson-databind'
+//	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//
+//	runtimeOnly 'com.h2database:h2'
+//	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+//
+//	compileOnly 'org.projectlombok:lombok'
+//	annotationProcessor 'org.projectlombok:lombok'
+//
+//	// Add these test dependencies
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+//	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+//}
+//
+//tasks.withType(JavaCompile) {
+//	options.encoding = 'UTF-8'
+//}
+//
+//springBoot {
+//	mainClass = 'com.example.sportsbar.SportsbarMain'  // Replace with your actual main class
+//}
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.5'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+// Adjusting source sets
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java'] // Ensure this points to the correct folder
+		}
+		resources {
+			srcDirs = ['src/main/resources'] // Ensure your resources (like application.properties) are here
+		}
+	}
+	test {
+		java {
+			srcDirs = ['src/test/java']
+		}
+	}
+}
+
+// Removed incorrect System.setProperty as Gradle does not use $code
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Add these test dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+// Ensure mainClass points to the correct fully qualified class name
+springBoot {
+	mainClass = 'com.example.sportsbar.SportsbarMain' // Adjust if this isn't the actual main class
+}
+
+// Optional: Clean up task dependencies for a fresh build
+tasks.register("cleanBuild") {
+	dependsOn 'clean', 'build'
+}
