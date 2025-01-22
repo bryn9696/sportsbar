@@ -29,8 +29,6 @@ public class PostController {
         this.postService = postService;
     }
 
-
-
     @PostMapping
     public ResponseEntity<?> submitPost(@RequestBody Post post) {
         try {
@@ -53,9 +51,6 @@ public class PostController {
         // Logic to generate a unique postId
         return new Random().nextInt(1000);
     }
-
-
-
 
     @GetMapping
     public List<Post> getAllPosts() {

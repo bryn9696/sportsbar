@@ -9,13 +9,13 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaConfig {
     @Bean
     public NewTopic footballTopic() {
-        return TopicBuilder.name("sports_football").build();
+        return TopicBuilder.name("sports-football").build();
     }
 
-    @Bean
-    public NewTopic basketballTopic() {
-        return TopicBuilder.name("sports_basketball").build();
-    }
+//    @Bean
+//    public NewTopic basketballTopic() {
+//        return TopicBuilder.name("sports-basketball").build();
+//    }
 
     // Add more topics as needed
 }
