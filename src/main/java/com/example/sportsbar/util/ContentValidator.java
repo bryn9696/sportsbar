@@ -25,11 +25,11 @@ public class ContentValidator {
                     throw new IllegalArgumentException("Image/Video content or media URL is invalid");
                 }
                 break;
-            case "voice":
-                if (post.getContent().length() > 200 || post.getVoiceDuration() > 120) {
-                    throw new IllegalArgumentException("Voice content exceeds limits");
-                }
-                break;
+//            case "voice":
+//                if (post.getContent().length() > 200 || post.getVoiceDuration() > 120) {
+//                    throw new IllegalArgumentException("Voice content exceeds limits");
+//                }
+//                break;
             default:
                 throw new IllegalArgumentException("Invalid media type");
         }

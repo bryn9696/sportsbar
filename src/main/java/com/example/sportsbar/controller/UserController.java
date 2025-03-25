@@ -1,5 +1,6 @@
 package com.example.sportsbar.controller;
 
+import com.example.sportsbar.config.JWTUtil;
 import com.example.sportsbar.dto.AuthResponse;
 import com.example.sportsbar.dto.LoginRequest;
 import com.example.sportsbar.model.Post;
@@ -82,7 +83,25 @@ public class UserController {
                     loginRequest.getPassword()
             );
             if (isAuthenticated) {
-                return ResponseEntity.ok("Login successful!");
+                // Fetch user and their posts
+                User user = userRepository.findByUsername(loginRequest.getUsername())
+                        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                List<Post> userPosts = postRepository.findByUser_Id(user.getId());
+
+                // Generate the JWT token
+                String token = JWTUtil.generateToken(user.getUsername());
+                if (token == null) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .body("Token generation failed");
+                }
+
+                // Build the response object
+                AuthResponse authResponse = new AuthResponse();
+                authResponse.setMessage("Login successful!");
+                authResponse.setToken(token);
+                authResponse.setPosts(userPosts);
+
+                return ResponseEntity.ok(authResponse);  // Return the token and posts
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
             }
@@ -90,6 +109,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     // (this should be a JWT or session in a real app)
     private String generateToken(String username) {
@@ -99,13 +119,13 @@ public class UserController {
 
     @GetMapping("/posts")
     public ResponseEntity<?> getPostsForUser(@RequestParam Integer userId) {
-        List<Post> posts = postRepository.findByUserId(userId);
+        List<Post> posts = postRepository.findByUser_Id(userId);
         return ResponseEntity.ok(posts);
     }
 
     @PostMapping("/posts")
-    public ResponseEntity<?> createPost(@RequestBody Post post, @RequestParam Integer userId) {
-        post.setUserId(userId);
+    public ResponseEntity<?> createPost(@RequestBody Post post, @RequestParam User userId) {
+        post.setUser(userId);
         Post savedPost = postRepository.save(post);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPost);
     }

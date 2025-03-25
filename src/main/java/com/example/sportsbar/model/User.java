@@ -10,7 +10,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer userId;
+    private Integer id;
 
     @NotNull
     @Column(name = "username", unique = true)
@@ -33,12 +33,12 @@ public class User {
         this.email = email;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer Id) {
+        this.id = id;
     }
 
     public String getUsername() {
