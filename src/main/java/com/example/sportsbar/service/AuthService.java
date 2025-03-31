@@ -1,6 +1,7 @@
 package com.example.sportsbar.service;
 
 import com.example.sportsbar.model.User;
+import com.example.sportsbar.repository.PostRepository;
 import com.example.sportsbar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +14,9 @@ public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -28,4 +32,5 @@ public class AuthService {
         // Validate the password
         return passwordEncoder.matches(rawPassword, user.getPassword());
     }
+
 }

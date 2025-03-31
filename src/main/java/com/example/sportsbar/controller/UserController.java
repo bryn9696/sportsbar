@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -86,7 +87,7 @@ public class UserController {
                 // Fetch user and their posts
                 User user = userRepository.findByUsername(loginRequest.getUsername())
                         .orElseThrow(() -> new IllegalArgumentException("User not found"));
-                List<Post> userPosts = postRepository.findByUser_Id(user.getId());
+                List<Post> userPosts = postRepository.findByUserId(user.getId());
 
                 // Generate the JWT token
                 String token = JWTUtil.generateToken(user.getUsername());
@@ -119,15 +120,27 @@ public class UserController {
 
     @GetMapping("/posts")
     public ResponseEntity<?> getPostsForUser(@RequestParam Integer userId) {
-        List<Post> posts = postRepository.findByUser_Id(userId);
+        List<Post> posts = postRepository.findByUserId(userId);
         return ResponseEntity.ok(posts);
     }
 
     @PostMapping("/posts")
-    public ResponseEntity<?> createPost(@RequestBody Post post, @RequestParam User userId) {
-        post.setUser(userId);
+    public ResponseEntity<?> createPost(@RequestBody Post post) {
+        if (post.getUserId() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User ID is required");
+        }
+
+        Optional<User> userOpt = userRepository.findById(post.getUserId());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist");
+        }
+
+        User user = userOpt.get();
+        post.setUsername(user.getUsername()); // Store username if needed
+
         Post savedPost = postRepository.save(post);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPost);
     }
+
 }
 

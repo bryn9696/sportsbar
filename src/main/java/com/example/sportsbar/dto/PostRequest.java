@@ -9,7 +9,7 @@ public class PostRequest {
     private String mediaType;
     private String mediaUrl;
     private List<Topic> topic;
-    private Iterable<Long> topicIds; // List of topic IDs
+    private List<Long> topicIds; // List of topic IDs
 
     public String getContent() {
         return content;
@@ -43,11 +43,14 @@ public class PostRequest {
         this.topic = topic;
     }
 
-    public Iterable<Long> getTopicIds() {
+    public List<Long> getTopicIds() {
         return topicIds;
     }
 
-    public void setTopicIds(Iterable<Long> topicIds) {
+    public void setTopicIds(List<Long> topicIds) {
         this.topicIds = topicIds;
+    }
+
+    public Iterable<Long> getTopicId() { return topicIds;
     }
 }

@@ -33,9 +33,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users/signup", "/api/users/login").permitAll()
                         .requestMatchers("/api/posts", "/api/feed").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/posts").authenticated() // Require authentication for creating posts
-                        .requestMatchers(HttpMethod.POST, "/api/createpost").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/posts/submitpost").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/posts/allposts").permitAll()
-                        .anyRequest().authenticated() // Require authentication for all other endpoints
+                        // Require authentication for all other endpoints
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
