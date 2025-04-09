@@ -12,6 +12,7 @@ import com.example.sportsbar.repository.UserRepository;
 import com.example.sportsbar.service.JwtService;
 import com.example.sportsbar.service.PostProducer;
 import com.example.sportsbar.service.PostService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.sun.security.auth.UserPrincipal;
@@ -46,28 +47,9 @@ public class PostController {
 
     @PostMapping("/submitpost")
     public ResponseEntity<?> submitPost(@RequestBody Post post) {
-        logger.info("Received POST request to /api/posts/submitpost with data: {}", post);
-        if (post.getUserId() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User ID is required");
-        }
-
-        Optional<User> userOpt = userRepository.findById(post.getUserId());
-        if (userOpt.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist");
-        }
-
-        User user = userOpt.get();
-        logger.info("found user", user);
-        // Set additional fields if necessary
-        post.setUsername(user.getUsername());
-        post.setTimestamp(LocalDateTime.now());
-
-        postRepository.save(post);
-        logger.info("Received POST request to /api/posts/submitpost with data: {}", post);
+        System.out.println("Post submitted: " + post.getContent());
         return ResponseEntity.ok("Post submitted successfully");
     }
-
-
 
     @GetMapping("/allposts")
     public ResponseEntity<List<Post>> getAllPosts() {

@@ -31,10 +31,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Disable CSRF
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/users/signup", "/api/users/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/posts/submitpost").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/posts/allposts").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/checkstatus").permitAll()
                         .requestMatchers("/api/posts", "/api/feed").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/posts").authenticated() // Require authentication for creating posts
-                        .requestMatchers(HttpMethod.POST, "/api/posts/submitpost").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/posts/allposts").permitAll()
+
+
                         // Require authentication for all other endpoints
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

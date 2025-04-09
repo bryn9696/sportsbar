@@ -9,6 +9,7 @@ import com.example.sportsbar.repository.PostRepository;
 import com.example.sportsbar.repository.UserRepository;
 import com.example.sportsbar.service.AuthService;
 import com.example.sportsbar.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -74,8 +76,6 @@ public class UserController {
         return userRepository.save(user);
     }
 
-
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
@@ -111,6 +111,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/checkstatus")
+    public ResponseEntity<?> checkStatus(HttpSession session) {
+        Boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
+        return ResponseEntity.ok(Map.of("loggedIn", loggedIn != null && loggedIn));
+    }
 
     // (this should be a JWT or session in a real app)
     private String generateToken(String username) {
